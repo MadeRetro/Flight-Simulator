@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
 
 
         // Rigidbody
-        private Rigidbody   m_Rigidbody             = null;
+        private Rigidbody   m_Rigidbody             ;
 
         // Rotation limit
         [SerializeField]
@@ -62,8 +62,13 @@ public class Character : MonoBehaviour
 
         }
 
-        // Called at fixed time
-        void FixedUpdate()
+    private void Update()
+    {
+        transform.Translate(Vector3.forward * m_MovementSpeed * Time.deltaTime);
+    }
+
+    // Called at fixed time
+    void FixedUpdate()
         {
             // Update yaw from roll angle. Writtent in fixed update to avoid camera lerp break
             UpdateYawFromRoll();
