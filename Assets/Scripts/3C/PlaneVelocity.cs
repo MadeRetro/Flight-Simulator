@@ -13,23 +13,23 @@ public class PlaneVelocity : MonoBehaviour
     [SerializeField]
     private float rollSpeed = 5f;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         // Get the Rigidbody component attached to the plane
         planeRigidbody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        // Check for spacebar input to accelerate forward
+        
         if (Input.GetKey(KeyCode.Space))
         {
             AccelerateForward();
         }
 
-        // Check for roll input
+        
         float rollInput = Input.GetAxis("Roll");
         RollPlane(rollInput);
     }

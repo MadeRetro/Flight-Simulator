@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
         private float       m_RotationSpeed         = 60;
 
 
-        // Rigidbody
+        
         private Rigidbody   m_Rigidbody             ;
 
         // Rotation limit
@@ -32,22 +32,22 @@ public class Character : MonoBehaviour
         [Range(0, 90)]
         private float       m_RollLimit             = 45;
 
-        // Yaw sensibility on roll
+        
         [SerializeField]
         [Range(0, 1)]
         private float       m_YawSensibilityOnRoll  = 0.33f;
 
-        // Is dodging
+        
         private bool        m_IsDodging             = false;
 
-        // Game camera
+        
         private BaseCamera  m_Camera             = null;
 
     #endregion
 
     #region MonoBehaviour
 
-        // Use this for initialization
+        
         void Start()
         {
 
@@ -67,14 +67,14 @@ public class Character : MonoBehaviour
         transform.Translate(Vector3.forward * m_MovementSpeed * Time.deltaTime);
     }
 
-    // Called at fixed time
+    
     void FixedUpdate()
         {
-            // Update yaw from roll angle. Writtent in fixed update to avoid camera lerp break
+            
             UpdateYawFromRoll();
         }
 
-        // On collision enter
+        
         void OnCollisionEnter(Collision collision)
         {
             if (m_Rigidbody != null)
@@ -106,7 +106,7 @@ public class Character : MonoBehaviour
             set { m_Camera = value; }
         }
 
-        // Is dodging
+        
         public bool IsDodging
         {
             get { return m_IsDodging; }
@@ -123,7 +123,7 @@ public class Character : MonoBehaviour
         {
             if (m_Rigidbody != null)
             {
-                // Speed
+                
                 float speed = m_MovementSpeed;
 
 
@@ -133,19 +133,19 @@ public class Character : MonoBehaviour
                     speed *= m_SprintScale;
                 }
 
-                // Movement
+                
                 m_Rigidbody.MovePosition(m_Rigidbody.position + _Direction.normalized * Time.deltaTime * speed);
             }
         }
 
         public void ResetRoll()
         {
-            // Calculate rotation
+            
             Vector3 rightNoY = Vector3.Cross(Vector3.up, transform.forward);
             rightNoY.y = 0;
             Quaternion rotator = Quaternion.FromToRotation(transform.right, rightNoY);
 
-            // Apply rotation
+            
             transform.rotation = Quaternion.Slerp(transform.rotation, rotator * transform.rotation, Time.deltaTime);
         }
 
@@ -153,7 +153,7 @@ public class Character : MonoBehaviour
 
         public void ResetPitch()
         {
-            // Calculate rotation
+            
             Vector3 forwardNoY = transform.forward;
             forwardNoY.y = 0;
             Quaternion rotator = Quaternion.FromToRotation(transform.forward, forwardNoY);
@@ -178,7 +178,7 @@ public class Character : MonoBehaviour
 
         public void AddRoll(float _AdditiveRoll, bool _Dodge = false)
         {
-            // Time based rotation
+           
             if (!_Dodge)
             {
                 _AdditiveRoll *= Time.deltaTime * m_RotationSpeed;
@@ -193,7 +193,7 @@ public class Character : MonoBehaviour
         public void AddPitch(float _AdditivePitch)
         {
 
-            // Time based rotation
+            
             _AdditivePitch *= Time.deltaTime * m_RotationSpeed;
 
             // Add rotation
@@ -211,7 +211,7 @@ public class Character : MonoBehaviour
             forwardNoY.y = 0;
             forwardNoY.Normalize();
 
-            // Roll angle
+            
             float pitch = Vector3.Angle(transform.forward, forwardNoY);
 
             if (Vector3.Cross(transform.right, forwardNoY).y < 0)
@@ -219,7 +219,7 @@ public class Character : MonoBehaviour
                 pitch *= -1;
             }
 
-            // Roll limit
+            
             if (m_PitchLimit > 0)
             {
                 if (pitch + _AdditivePitch > m_RollLimit)
